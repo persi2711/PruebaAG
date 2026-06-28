@@ -1,0 +1,36 @@
+services:
+  db:
+    image: mariadb:10.11
+    container_name: sistema_alumnos_db
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root_password_secure_123
+      MARIADB_DATABASE: sistema_alumnos
+      MARIADB_USER: alumno_user
+      MARIADB_PASSWORD: alumno_password_99
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  seeder:
+    image: python:3.11-slim
+    container_name: sistema_alumnos_seeder
+    restart: "no"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: >
+      sh -c "pip install --no-cache-dir mysql-connector-python pandas && python seeder.py"
+
+volumes:
+  mariadb_data:
