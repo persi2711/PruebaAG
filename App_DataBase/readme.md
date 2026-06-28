@@ -1,4 +1,4 @@
-# Sistema de Gestión de Alumnos
+# Proyecto Gestion de Alumnos: Base de datos
 
 Este proyecto despliega un entorno contenerizado utilizando **Docker Compose** para inicializar una base de datos **MariaDB (10.11)** y un script automatizado en **Python 3.11** encargado de simular y poblar datos de prueba dinámicamente desde un archivo CSV, además de crear un procedimiento almacenado.
 

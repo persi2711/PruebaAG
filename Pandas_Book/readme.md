@@ -1,4 +1,4 @@
-# Sistema de Análisis y Visualización de Alumnos
+# Proyecto Gestion de Alumnos: Pandas Notesbook
 
 Este proyecto consiste en un análisis de datos y módulo de visualización desarrollado en un **Jupyter Notebook (`.ipynb`)**. Se conecta a la infraestructura de MariaDB para extraer la información operativa e histórica de los alumnos, procesarla utilizando **Pandas** y generar insights clave de negocio a través de representaciones gráficas con **Matplotlib** y **Seaborn**.
 
