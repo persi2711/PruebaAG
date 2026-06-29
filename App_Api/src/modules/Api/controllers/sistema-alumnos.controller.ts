@@ -20,7 +20,7 @@ import { CambiarEstatusDto } from "../dtos/cambiar-estatus.dto";
 import { SistemaAlumnosService } from "src/modules/Application/services/sistema-alumnos.service";
 
 @ApiTags("Sistema de Alumnos (Prueba Técnica)")
-@Controller("api/sistema-alumnos")
+@Controller("sistema-alumnos")
 export class SistemaAlumnosController {
   constructor(private readonly sistemaService: SistemaAlumnosService) {}
 

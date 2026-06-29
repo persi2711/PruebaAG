@@ -1,0 +1,78 @@
+<h2 mat-dialog-title>Cambiar Estatus de Alumno</h2>
+
+<mat-dialog-content>
+  <div class="alumno-info-summary">
+    <p>
+      <strong>Alumno:</strong> {{ alumno.perfilInfo?.nombres }}
+      {{ alumno.perfilInfo?.apellidos }}
+    </p>
+
+    @if (inscripcionSeleccionada()) {
+      <p>
+        <strong>Estatus Actual en Programa:</strong>
+        <span class="current-status-badge">
+          {{ inscripcionSeleccionada()?.estatusActual }}
+        </span>
+      </p>
+    }
+  </div>
+
+  <form #estatusForm="ngForm" class="form-layout">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Seleccionar Programa Académico</mat-label>
+      <mat-select
+        name="inscripcion"
+        [ngModel]="inscripcionSeleccionada()"
+        (selectionChange)="onProgramaChange($event.value)"
+        required
+      >
+        @for (insc of alumno.inscripciones; track insc.id) {
+          <mat-option [value]="insc">
+            {{ insc.programa.nombre }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Seleccionar Nuevo Estatus</mat-label>
+      <mat-select
+        name="nuevoEstatus"
+        [(ngModel)]="nuevoEstatus"
+        [disabled]="!inscripcionSeleccionada()"
+        required
+      >
+        @for (opcion of estatusOpcionesFiltradas(); track opcion) {
+          <mat-option [value]="opcion">{{ opcion }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Motivo del Cambio</mat-label>
+      <textarea
+        matInput
+        name="motivo"
+        [(ngModel)]="motivo"
+        rows="3"
+        placeholder="Escribe la justificación..."
+      >
+      </textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cerrar()" [disabled]="enviando()">
+    Cancelar
+  </button>
+
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="guardar()"
+    [disabled]="estatusForm.invalid || !inscripcionSeleccionada() || enviando()"
+  >
+    {{ enviando() ? "Guardando..." : "Confirmar Cambio" }}
+  </button>
+</mat-dialog-actions>

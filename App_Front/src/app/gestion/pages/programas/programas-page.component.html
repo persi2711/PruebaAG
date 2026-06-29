@@ -1,0 +1,33 @@
+<div class="page-header">
+  <h2>Programas Académicos</h2>
+  <p>Oferta educativa y capacitaciones activas en el sistema.</p>
+</div>
+
+@if (cargando()) {
+  <div class="loader-container">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+} @else {
+  <div class="maestros-grid">
+    @for (prog of programas(); track prog.id) {
+      <mat-card class="maestro-card mat-elevation-z2">
+        <mat-card-header>
+          <div mat-card-avatar class="avatar-icon bg-accent">
+            <mat-icon>school</mat-icon>
+          </div>
+          <mat-card-title>{{ prog.nombre }}</mat-card-title>
+          <mat-card-subtitle>Estatus del Catálogo: Activo</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="card-body">
+          <p class="description-text">
+            Este programa coordina el desarrollo formativo del alumno vinculado
+            a sus asignaciones industriales.
+          </p>
+        </mat-card-content>
+      </mat-card>
+    } @empty {
+      <div class="empty-state">No hay programas educativos disponibles.</div>
+    }
+  </div>
+}

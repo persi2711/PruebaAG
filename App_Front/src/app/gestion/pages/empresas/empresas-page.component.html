@@ -1,0 +1,42 @@
+<div class="page-header">
+  <h2>Empresas Conveniadas</h2>
+  <p>Listado de organizaciones asociadas para el seguimiento de alumnos.</p>
+</div>
+
+@if (cargando()) {
+  <div class="loader-container">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+} @else {
+  <div class="maestros-grid">
+    @for (empresa of empresas(); track empresa.nombre) {
+      <mat-card class="maestro-card mat-elevation-z2">
+        <mat-card-header>
+          <div mat-card-avatar class="avatar-icon bg-primary">
+            <mat-icon>business</mat-icon>
+          </div>
+          <mat-card-title>{{ empresa.nombre }}</mat-card-title>
+          <mat-card-subtitle
+            >Registrada:
+            {{ empresa.createdAt | date: "dd/MM/yyyy" }}</mat-card-subtitle
+          >
+        </mat-card-header>
+
+        <mat-card-content class="card-body">
+          <div class="info-row">
+            <mat-icon>person</mat-icon>
+            <span>{{ empresa.contactoNombre }}</span>
+          </div>
+          <div class="info-row">
+            <mat-icon>mail</mat-icon>
+            <span class="email-text">{{ empresa.contactoEmail }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    } @empty {
+      <div class="empty-state">
+        No hay empresas registradas en este momento.
+      </div>
+    }
+  </div>
+}

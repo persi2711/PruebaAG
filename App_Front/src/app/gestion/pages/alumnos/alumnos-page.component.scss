@@ -1,0 +1,38 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  .title-container {
+    h2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+    }
+    p {
+      margin: 4px 0 0 0;
+      color: rgba(0, 0, 0, 0.54);
+    }
+  }
+}
+
+.filters-container {
+  display: flex;
+  gap: 16px;
+  padding: 16px 24px 0 24px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  margin-bottom: 20px;
+
+  mat-form-field {
+    flex: 1;
+  }
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}

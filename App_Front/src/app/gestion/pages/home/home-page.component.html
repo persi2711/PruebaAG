@@ -1,0 +1,23 @@
+<div class="dashboard-header">
+  <h2>Dashboard de Control</h2>
+  <p>Resumen general del estatus académico de los alumnos inscritos.</p>
+</div>
+@if (cargando()) {
+  <div class="loader-container">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+} @else if (metricas(); as data) {
+  <div class="metrics-grid">
+    <app-metric-card title="Total Registrados" [value]="data.totalRegistrados">
+    </app-metric-card>
+
+    <app-metric-card title="Alumnos Activos" [value]="data.activos">
+    </app-metric-card>
+
+    <app-metric-card title="Bajas de Empresas" [value]="data.bajasEmpresa">
+    </app-metric-card>
+
+    <app-metric-card title="Bajas de Programas" [value]="data.bajasPrograma">
+    </app-metric-card>
+  </div>
+}

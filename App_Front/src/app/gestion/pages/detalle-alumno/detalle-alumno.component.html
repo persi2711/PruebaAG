@@ -1,0 +1,155 @@
+@if (!errorEstudiante()) {
+  <div class="navigation-header">
+    <button mat-button routerLink="/gestion/alumnos">
+      <mat-icon>arrow_back</mat-icon> Volver a Alumnos
+    </button>
+  </div>
+}
+
+@if (cargando()) {
+  <div class="loader-container">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+} @else if (errorEstudiante()) {
+  <div class="error-page-container mat-elevation-z2">
+    <mat-icon class="error-icon">person_search</mat-icon>
+    <h3>Estudiante no encontrado</h3>
+    <p>
+      El identificador proporcionado no coincide con ningún alumno activo, o el
+      registro fue removido del sistema.
+    </p>
+    <button mat-flat-button color="primary" routerLink="/gestion/alumnos">
+      Regresar al Listado General
+    </button>
+  </div>
+} @else if (perfilData(); as data) {
+  <div class="profile-grid">
+    <div class="profile-card-container">
+      <mat-card class="profile-card mat-elevation-z2">
+        <div class="avatar-wrapper">
+          <img
+            [src]="data.alumno.urlImagenPerfil || imagenDefecto"
+            alt="Avatar"
+            class="profile-avatar"
+          />
+          <span
+            class="status-dot"
+            [ngClass]="{ active: data.alumno.isActive }"
+          ></span>
+        </div>
+
+        <mat-card-content class="profile-details">
+          <h3>{{ data.alumno.nombres }} {{ data.alumno.apellidos }}</h3>
+          <p class="subtitle-text">ID Alumno: #{{ data.alumno.id }}</p>
+
+          <div class="info-section-divider"></div>
+
+          <div class="info-row">
+            <mat-icon>business</mat-icon>
+            <div>
+              <span class="label">Empresa</span>
+              <span class="value">{{ data.alumno.empresa.nombre }}</span>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <mat-icon>phone</mat-icon>
+            <div>
+              <span class="label">Teléfono</span>
+              <span class="value">{{
+                data.alumno.telefono || "No registrado"
+              }}</span>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <mat-icon>place</mat-icon>
+            <div>
+              <span class="label">Dirección</span>
+              <span class="value">{{
+                data.alumno.direccion || "No registrada"
+              }}</span>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <mat-icon>calendar_today</mat-icon>
+            <div>
+              <span class="label">Miembro desde</span>
+              <span class="value">{{
+                data.alumno.createdAt | date: "dd MMMM, yyyy"
+              }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="timeline-container">
+      <mat-card class="timeline-card mat-elevation-z2">
+        <mat-card-header>
+          <mat-card-title>Historial de Estatus Académico</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          @if (data.historial && data.historial.length > 0) {
+            <div class="timeline">
+              @for (item of data.historial; track item.id) {
+                <div class="timeline-item">
+                  <div class="timeline-badge-wrapper">
+                    <div
+                      class="timeline-badge"
+                      [ngClass]="
+                        item.estatusNuevo.toLowerCase().replace(' ', '-')
+                      "
+                    >
+                      <mat-icon>fiber_manual_record</mat-icon>
+                    </div>
+                  </div>
+
+                  <div class="timeline-panel">
+                    <div class="timeline-heading">
+                      <h4 class="timeline-title">
+                        Cambio a:
+                        <span class="status-name">{{ item.estatusNuevo }}</span>
+                      </h4>
+                      <p class="timeline-date">
+                        <mat-icon>schedule</mat-icon>
+                        {{ item.createdAt | date: "dd/MM/yyyy hh:mm a" }}
+                      </p>
+                    </div>
+
+                    <div class="timeline-body">
+                      <p>
+                        <strong>Programa afectado:</strong>
+                        {{ item.programa.nombre }}
+                      </p>
+                      @if (item.estatusAnterior) {
+                        <p class="previous-status-text">
+                          <strong>Estado anterior:</strong>
+                          {{ item.estatusAnterior }}
+                        </p>
+                      }
+                      <p class="motivo-box">
+                        <strong>Motivo:</strong>
+                        {{ item.motivo || "Sin justificación registrada." }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          } @else {
+            <div class="empty-timeline">
+              <mat-icon>history_toggle_off</mat-icon>
+              <p>
+                Este estudiante no cuenta con movimientos o cambios de estatus
+                registrados.
+              </p>
+            </div>
+          }
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+}

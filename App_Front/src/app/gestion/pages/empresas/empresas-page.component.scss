@@ -1,0 +1,94 @@
+.page-header {
+  margin-bottom: 24px;
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  p {
+    margin: 4px 0 0 0;
+    color: rgba(0, 0, 0, 0.54);
+  }
+}
+
+.maestros-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.maestro-card {
+  border-radius: 8px;
+  overflow: hidden;
+
+  .avatar-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+
+    mat-icon {
+      color: #ffffff;
+    }
+
+    &.bg-primary {
+      background-color: #3f51b5;
+    }
+    &.bg-accent {
+      background-color: #ff4081;
+    }
+  }
+
+  .card-body {
+    padding-top: 16px;
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 14px;
+
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        color: rgba(0, 0, 0, 0.45);
+      }
+
+      .email-text {
+        color: #3f51b5;
+        font-weight: 500;
+      }
+    }
+
+    .description-text {
+      margin: 0;
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 250px;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  color: rgba(0, 0, 0, 0.4);
+  font-style: italic;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px dashed rgba(0, 0, 0, 0.1);
+}

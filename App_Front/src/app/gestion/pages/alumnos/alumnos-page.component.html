@@ -1,0 +1,46 @@
+<div class="page-header">
+  <div class="title-container">
+    <h2>Control de Alumnos</h2>
+    <p>Gestión modularizada de la matrícula con State Services.</p>
+  </div>
+  <button mat-flat-button color="primary" (click)="abrirModalAgregar()">
+    <mat-icon>person_add</mat-icon>
+    Agregar Alumno
+  </button>
+</div>
+
+<div class="filters-container mat-elevation-z1">
+  <mat-form-field appearance="outline">
+    <mat-label>Filtrar por Estatus</mat-label>
+    <mat-select
+      [(ngModel)]="estatusSeleccionado"
+      (selectionChange)="aplicarFiltros()"
+    >
+      <mat-option value="">Todos los estatus</mat-option>
+      @for (estatus of estatusOpciones; track estatus) {
+        <mat-option [value]="estatus">{{ estatus }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Filtrar por Programa</mat-label>
+    <mat-select
+      [(ngModel)]="programaSeleccionado"
+      (selectionChange)="aplicarFiltros()"
+    >
+      <mat-option [value]="undefined">Todos los programas</mat-option>
+      @for (prog of programas(); track prog.id) {
+        <mat-option [value]="prog.id">{{ prog.nombre }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+@if (state.cargando()) {
+  <div class="loader-container">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+} @else {
+  <app-alumnos-table></app-alumnos-table>
+}

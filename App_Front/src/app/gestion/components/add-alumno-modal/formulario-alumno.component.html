@@ -1,0 +1,150 @@
+<h2 mat-dialog-title>Registrar Nuevo Alumno</h2>
+
+<mat-dialog-content>
+  @if (cargandoCatalogos()) {
+    <div class="spinner-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Cargando empresas y programas...</p>
+    </div>
+  } @else {
+    <form [formGroup]="alumnoForm" class="form-grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Nombres</mat-label>
+        <input
+          matInput
+          formControlName="nombres"
+          placeholder="Ej. Emmanuel Antonio"
+        />
+        @if (
+          alumnoForm.get("nombres")?.hasError("required") &&
+          alumnoForm.get("nombres")?.touched
+        ) {
+          <mat-error>El nombre es obligatorio.</mat-error>
+        }
+        @if (
+          alumnoForm.get("nombres")?.hasError("soloNumeros") &&
+          alumnoForm.get("nombres")?.touched
+        ) {
+          <mat-error>El nombre no puede contener únicamente números.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Apellidos</mat-label>
+        <input
+          matInput
+          formControlName="apellidos"
+          placeholder="Ej. Rivera Lopez"
+        />
+        @if (
+          alumnoForm.get("apellidos")?.hasError("required") &&
+          alumnoForm.get("apellidos")?.touched
+        ) {
+          <mat-error>Los apellidos son obligatorios.</mat-error>
+        }
+        @if (
+          alumnoForm.get("apellidos")?.hasError("soloNumeros") &&
+          alumnoForm.get("apellidos")?.touched
+        ) {
+          <mat-error
+            >Los apellidos no pueden contener únicamente números.</mat-error
+          >
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Empresa Asociada</mat-label>
+        <mat-select formControlName="empresaId">
+          @for (empresa of empresas(); track empresa.id) {
+            <mat-option [value]="empresa.id">{{ empresa.nombre }}</mat-option>
+          }
+        </mat-select>
+        @if (
+          alumnoForm.get("empresaId")?.hasError("required") &&
+          alumnoForm.get("empresaId")?.touched
+        ) {
+          <mat-error>Debes asociar una empresa.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Programa Académico Inicial</mat-label>
+        <mat-select formControlName="programaId">
+          @for (prog of programas(); track prog.id) {
+            <mat-option [value]="prog.id">{{ prog.nombre }}</mat-option>
+          }
+        </mat-select>
+        @if (
+          alumnoForm.get("programaId")?.hasError("required") &&
+          alumnoForm.get("programaId")?.touched
+        ) {
+          <mat-error>Debes seleccionar un programa inicial.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Teléfono de Contacto</mat-label>
+        <input
+          matInput
+          formControlName="telefono"
+          placeholder="Ej. +526461234567"
+        />
+        <mat-hint
+          >Debe incluir el formato internacional (Ej. +52 seguido de 10
+          dígitos)</mat-hint
+        >
+        @if (
+          alumnoForm.get("telefono")?.hasError("pattern") &&
+          alumnoForm.get("telefono")?.touched
+        ) {
+          <mat-error
+            >Formato inválido. Debe empezar con +52 seguido de 10
+            números.</mat-error
+          >
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>URL de Imagen de Perfil (Opcional)</mat-label>
+        <input
+          matInput
+          formControlName="urlImagenPerfil"
+          placeholder="https://ejemplo.com/foto.jpg"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Dirección (Opcional)</mat-label>
+        <textarea
+          matInput
+          formControlName="direccion"
+          rows="2"
+          placeholder="Calle, Número, Colonia..."
+        ></textarea>
+        @if (
+          alumnoForm.get("direccion")?.hasError("soloNumeros") &&
+          alumnoForm.get("direccion")?.touched
+        ) {
+          <mat-error
+            >La dirección no puede estar conformada únicamente por
+            números.</mat-error
+          >
+        }
+      </mat-form-field>
+    </form>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cerrar()" [disabled]="enviando()">
+    Cancelar
+  </button>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="guardar()"
+    [disabled]="alumnoForm.invalid || cargandoCatalogos() || enviando()"
+  >
+    {{ enviando() ? "Guardando..." : "Registrar Alumno" }}
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,63 @@
+<mat-toolbar color="primary" class="main-navbar mat-elevation-z3">
+  <button mat-icon-button (click)="sidebar.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Proyecto Gestión de Alumnos</span>
+</mat-toolbar>
+
+<mat-sidenav-container class="main-container">
+  <mat-sidenav
+    #sidebar
+    [mode]="sidenavMode()"
+    [opened]="sidenavOpened()"
+    class="main-sidebar"
+  >
+    <mat-nav-list>
+      <a
+        mat-list-item
+        routerLink="home"
+        routerLinkActive="active-item"
+        (click)="navegar()"
+      >
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <span matListItemTitle>Home</span>
+      </a>
+
+      <a
+        mat-list-item
+        routerLink="alumnos"
+        routerLinkActive="active-item"
+        (click)="navegar()"
+      >
+        <mat-icon matListItemIcon>people</mat-icon>
+        <span matListItemTitle>Alumnos</span>
+      </a>
+
+      <a
+        mat-list-item
+        routerLink="programas"
+        routerLinkActive="active-item"
+        (click)="navegar()"
+      >
+        <mat-icon matListItemIcon>school</mat-icon>
+        <span matListItemTitle>Programas</span>
+      </a>
+
+      <a
+        mat-list-item
+        routerLink="empresas"
+        routerLinkActive="active-item"
+        (click)="navegar()"
+      >
+        <mat-icon matListItemIcon>business</mat-icon>
+        <span matListItemTitle>Empresas</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="main-content">
+    <div class="page-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
